@@ -1,0 +1,15 @@
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\bin\Release\net8.0\GovernmentCollections.Data.deps.json
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\bin\Release\net8.0\GovernmentCollections.Data.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\bin\Release\net8.0\GovernmentCollections.Data.pdb
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\bin\Release\net8.0\GovernmentCollections.Domain.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\bin\Release\net8.0\GovernmentCollections.Domain.pdb
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\GovernmentCollections.Data.csproj.AssemblyReference.cache
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\GovernmentCollections.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\GovernmentCollections.Data.AssemblyInfoInputs.cache
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\GovernmentCollections.Data.AssemblyInfo.cs
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\GovernmentCollections.Data.csproj.CoreCompileInputs.cache
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\Governme.E7AE1BF6.Up2Date
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\GovernmentCollections.Data.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\refint\GovernmentCollections.Data.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\GovernmentCollections.Data.pdb
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Data\obj\Release\net8.0\ref\GovernmentCollections.Data.dll

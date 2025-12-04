@@ -1,0 +1,9 @@
+{
+  "Remita": {
+    "BaseUrl": "https://demo.remita.net",
+    "Username": "6O0GI4EWOU010F9J",
+    "Password": "UGBNABRSWKLQL1GGIV5SLW8AO2L3INE7",
+    "PublicKey": "your-public-key-here",
+    "SecretKey": "your-secret-key-here"
+  }
+}

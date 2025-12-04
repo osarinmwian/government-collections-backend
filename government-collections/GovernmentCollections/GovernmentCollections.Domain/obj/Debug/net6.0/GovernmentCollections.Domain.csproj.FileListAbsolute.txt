@@ -1,0 +1,12 @@
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\bin\Debug\net6.0\GovernmentCollections.Domain.deps.json
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\bin\Debug\net6.0\GovernmentCollections.Domain.dll
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\bin\Debug\net6.0\GovernmentCollections.Domain.pdb
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\GovernmentCollections.Domain.csproj.AssemblyReference.cache
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\GovernmentCollections.Domain.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\GovernmentCollections.Domain.AssemblyInfoInputs.cache
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\GovernmentCollections.Domain.AssemblyInfo.cs
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\GovernmentCollections.Domain.csproj.CoreCompileInputs.cache
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\GovernmentCollections.Domain.dll
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\refint\GovernmentCollections.Domain.dll
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\GovernmentCollections.Domain.pdb
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net6.0\ref\GovernmentCollections.Domain.dll

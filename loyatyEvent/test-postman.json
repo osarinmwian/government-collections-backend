@@ -1,0 +1,118 @@
+{
+  "info": {
+    "name": "KeyLoyalty End-to-End Tests",
+    "description": "Complete test suite for KeyLoyalty API"
+  },
+  "item": [
+    {
+      "name": "1. Airtime Purchase (Low Amount)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-API-Key", "value": "KL-2024-API-KEY-SECURE"}
+        ],
+        "url": "http://localhost:5000/api/transactions/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountNumber\": \"1234567890\",\n  \"amount\": 500,\n  \"transactionType\": \"AIRTIME_PURCHASE\"\n}"
+        }
+      }
+    },
+    {
+      "name": "2. Airtime Purchase (High Amount)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-API-Key", "value": "KL-2024-API-KEY-SECURE"}
+        ],
+        "url": "http://localhost:5000/api/transactions/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountNumber\": \"1234567890\",\n  \"amount\": 2000,\n  \"transactionType\": \"AIRTIME_PURCHASE\"\n}"
+        }
+      }
+    },
+    {
+      "name": "3. Bill Payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-API-Key", "value": "KL-2024-API-KEY-SECURE"}
+        ],
+        "url": "http://localhost:5000/api/transactions/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountNumber\": \"1234567890\",\n  \"amount\": 1500,\n  \"transactionType\": \"BILL_PAYMENT\"\n}"
+        }
+      }
+    },
+    {
+      "name": "4. NIP Transfer (Below Minimum)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-API-Key", "value": "KL-2024-API-KEY-SECURE"}
+        ],
+        "url": "http://localhost:5000/api/transactions/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountNumber\": \"1234567890\",\n  \"amount\": 999,\n  \"transactionType\": \"NIP_TRANSFER\"\n}"
+        }
+      }
+    },
+    {
+      "name": "5. NIP Transfer (Above Minimum)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-API-Key", "value": "KL-2024-API-KEY-SECURE"}
+        ],
+        "url": "http://localhost:5000/api/transactions/process",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountNumber\": \"1234567890\",\n  \"amount\": 5000,\n  \"transactionType\": \"NIP_TRANSFER\"\n}"
+        }
+      }
+    },
+    {
+      "name": "6. Get Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "X-API-Key", "value": "KL-2024-API-KEY-SECURE"}
+        ],
+        "url": "http://localhost:5000/api/loyalty/dashboard/1234567890"
+      }
+    },
+    {
+      "name": "7. Redeem Points",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "X-API-Key", "value": "KL-2024-API-KEY-SECURE"}
+        ],
+        "url": "http://localhost:5000/api/loyalty/redeem-points",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"accountNumber\": \"1234567890\",\n  \"pointsToRedeem\": 1000,\n  \"redemptionType\": \"CASH\",\n  \"username\": \"testuser\"\n}"
+        }
+      }
+    },
+    {
+      "name": "8. Get Dashboard After Redemption",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "X-API-Key", "value": "KL-2024-API-KEY-SECURE"}
+        ],
+        "url": "http://localhost:5000/api/loyalty/dashboard/1234567890"
+      }
+    }
+  ]
+}

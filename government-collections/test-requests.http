@@ -1,0 +1,26 @@
+### Test Remita Payment Initiation
+POST https://localhost:7001/api/remita/initiate-payment
+Content-Type: application/json
+
+{
+  "amount": 5000.00,
+  "payerName": "John Doe",
+  "payerEmail": "john.doe@example.com",
+  "payerPhone": "08012345678",
+  "description": "Government Tax Payment"
+}
+
+### Test Payment Verification (Replace with actual RRR)
+GET https://localhost:7001/api/remita/verify-payment/12345678901
+
+### Test Transaction Status (Replace with actual transaction ID)
+GET https://localhost:7001/api/remita/transaction-status/TXN123456789
+
+### Test Direct Remita Token Generation
+POST https://demo.remita.net/remita/exapp/api/v1/send/api/uaasvc/uaa/token
+Content-Type: application/json
+
+{
+   "username": "2LEPNR6RZQAD0J7G",
+   "password": "GZU4BP1PRAKPBE1SD27EW6HH2QMM0US5"
+}

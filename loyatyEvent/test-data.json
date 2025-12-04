@@ -1,0 +1,99 @@
+{
+  "testScenarios": [
+    {
+      "name": "Test Airtime Purchase - Low Amount (No Points)",
+      "endpoint": "POST /api/transactions/process",
+      "request": {
+        "accountNumber": "1234567890",
+        "amount": 500,
+        "transactionType": "AIRTIME_PURCHASE"
+      },
+      "expectedPoints": 0,
+      "reason": "Amount ≤ ₦1000, no points awarded"
+    },
+    {
+      "name": "Test Airtime Purchase - High Amount",
+      "endpoint": "POST /api/transactions/process", 
+      "request": {
+        "accountNumber": "1234567890",
+        "amount": 2000,
+        "transactionType": "AIRTIME_PURCHASE"
+      },
+      "expectedPoints": 2000,
+      "reason": "₦2000 = 2000 points (1 point per ₦1)"
+    },
+    {
+      "name": "Test Bill Payment",
+      "endpoint": "POST /api/transactions/process",
+      "request": {
+        "accountNumber": "1234567890", 
+        "amount": 1500,
+        "transactionType": "BILL_PAYMENT"
+      },
+      "expectedPoints": 1500,
+      "reason": "₦1500 = 1500 points"
+    },
+    {
+      "name": "Test NIP Transfer - Below Minimum",
+      "endpoint": "POST /api/transactions/process",
+      "request": {
+        "accountNumber": "1234567890",
+        "amount": 999,
+        "transactionType": "NIP_TRANSFER" 
+      },
+      "expectedPoints": 0,
+      "reason": "Amount < ₦1000, no points for transfers"
+    },
+    {
+      "name": "Test NIP Transfer - Above Minimum",
+      "endpoint": "POST /api/transactions/process",
+      "request": {
+        "accountNumber": "1234567890",
+        "amount": 5000,
+        "transactionType": "NIP_TRANSFER"
+      },
+      "expectedPoints": 5000,
+      "reason": "₦5000 = 5000 points"
+    },
+    {
+      "name": "Test Different Account",
+      "endpoint": "POST /api/transactions/process",
+      "request": {
+        "accountNumber": "9876543210",
+        "amount": 3000,
+        "transactionType": "BILL_PAYMENT"
+      },
+      "expectedPoints": 3000,
+      "reason": "New account gets 3000 points"
+    }
+  ],
+  "dashboardTests": [
+    {
+      "name": "Check Account 1234567890 Dashboard",
+      "endpoint": "GET /api/loyalty/dashboard/1234567890",
+      "expectedTotalPoints": 8500,
+      "expectedTier": "Gold",
+      "calculation": "2000 + 1500 + 5000 = 8500 points"
+    },
+    {
+      "name": "Check Account 9876543210 Dashboard", 
+      "endpoint": "GET /api/loyalty/dashboard/9876543210",
+      "expectedTotalPoints": 3000,
+      "expectedTier": "Silver",
+      "calculation": "3000 points"
+    }
+  ],
+  "redemptionTest": {
+    "name": "Test Points Redemption",
+    "endpoint": "POST /api/loyalty/redeem-points",
+    "request": {
+      "accountNumber": "1234567890",
+      "pointsToRedeem": 1000,
+      "redemptionType": "CASH",
+      "username": "testuser"
+    },
+    "expectedRemainingPoints": 7500,
+    "expectedAmountRedeemed": 1000,
+    "calculation": "8500 - 1000 = 7500 points remaining"
+  }
+}

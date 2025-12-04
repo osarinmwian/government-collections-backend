@@ -1,0 +1,160 @@
+### Interswitch Government Collections API Test Requests
+### Base URL: http://localhost:5000/api/v1/interswitch
+
+### 1. Get Authentication Status
+GET http://localhost:5000/api/v1/interswitch/auth-status
+Authorization: Bearer {{jwt_token}}
+
+### 2. Get Government Billers
+GET http://localhost:5000/api/v1/interswitch/government-billers
+Authorization: Bearer {{jwt_token}}
+
+### 3. Bill Inquiry - FIRS Tax Payment
+POST http://localhost:5000/api/v1/interswitch/bill-inquiry
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "billerId": 114,
+  "customerReference": "12345678901"
+}
+
+### 4. Bill Inquiry - Lagos State Collections
+POST http://localhost:5000/api/v1/interswitch/bill-inquiry
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "billerId": 16570,
+  "customerReference": "LASG123456"
+}
+
+### 5. Bill Inquiry - Federal Government TSA
+POST http://localhost:5000/api/v1/interswitch/bill-inquiry
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "billerId": 16905,
+  "customerReference": "FG2024001"
+}
+
+### 6. Process Payment - FIRS Tax Payment
+POST http://localhost:5000/api/v1/interswitch/process-payment
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "billerId": 114,
+  "customerReference": "12345678901",
+  "amount": 50000.00,
+  "customerEmail": "customer@example.com",
+  "customerPhone": "08012345678",
+  "pin": "1234"
+}
+
+### 7. Process Payment - Lagos State Collections
+POST http://localhost:5000/api/v1/interswitch/process-payment
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "billerId": 16570,
+  "customerReference": "LASG123456",
+  "amount": 25000.00,
+  "customerEmail": "customer@example.com",
+  "customerPhone": "08012345678",
+  "pin": "1234"
+}
+
+### 8. Process Payment - Nigerian Custom Service
+POST http://localhost:5000/api/v1/interswitch/process-payment
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "billerId": 17377,
+  "customerReference": "NCS2024001",
+  "amount": 100000.00,
+  "customerEmail": "customer@example.com",
+  "customerPhone": "08012345678",
+  "pin": "1234"
+}
+
+### 9. Verify Transaction
+GET http://localhost:5000/api/v1/interswitch/verify-transaction/KMB_20241123155500_abc12345
+Authorization: Bearer {{jwt_token}}
+
+### 10. Test Government Biller Categories
+# The following billers should be included in government collections:
+
+# State Payments Category (ID: 3):
+# - Abia State Infrastructural Development Agency (ID: 303)
+# - Cross River State (ID: 152)
+
+# Tax Payments Category (ID: 12):
+# - FIRS (ID: 114)
+# - TaxPro (ID: 17576)
+
+# Quickteller Business Category (ID: 24):
+# - Nigerian Custom Service (ID: 17377)
+# - Soup Kitchen (ID: 809)
+
+# Other Government-related billers by keywords:
+# - Lagos State Collections (ID: 16570, 17604)
+# - Federal GovtTSA (ID: 16905)
+# - TSA (ID: 13585)
+# - TSABiller (ID: 16904)
+
+### Sample Response Formats:
+
+### Government Billers Response:
+# {
+#   "status": "SUCCESS",
+#   "message": "Government billers retrieved successfully",
+#   "data": [
+#     {
+#       "id": 114,
+#       "name": "FIRS",
+#       "shortName": "FIRS",
+#       "narration": "Pay your taxes",
+#       "customerField1": "TIN",
+#       "surcharge": "666",
+#       "currencyCode": "566",
+#       "currencySymbol": "NGN",
+#       "categoryId": 12,
+#       "categoryName": "Tax Payments",
+#       "amountType": 0
+#     }
+#   ],
+#   "count": 25
+# }
+
+### Bill Inquiry Response:
+# {
+#   "status": "SUCCESS",
+#   "message": "Bill inquiry successful",
+#   "data": {
+#     "responseCode": "00",
+#     "responseMessage": "Successful",
+#     "customerName": "John Doe",
+#     "amount": 50000.00,
+#     "dueDate": "2024-12-31T23:59:59Z",
+#     "billDescription": "Annual Tax Payment"
+#   }
+# }
+
+### Payment Response:
+# {
+#   "status": "SUCCESS",
+#   "message": "Payment processed successfully",
+#   "data": {
+#     "responseCode": "00",
+#     "responseMessage": "Payment Successful",
+#     "transactionReference": "KMB_20241123155500_abc12345",
+#     "amount": 50000.00,
+#     "surcharge": 666.00,
+#     "totalAmount": 50666.00,
+#     "paymentStatus": "SUCCESSFUL"
+#   }
+# }

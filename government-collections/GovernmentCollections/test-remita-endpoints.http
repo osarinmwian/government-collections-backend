@@ -1,0 +1,70 @@
+### Test Remita Endpoints
+
+### 1. Get All Billers
+GET https://localhost:7001/api/v1/send/api/bgatesvc/v3/billpayment/billers
+Content-Type: application/json
+
+### 2. Get Biller Products
+GET https://localhost:7001/api/v1/send/api/bgatesvc/v3/billpayment/biller/QADEMO/products
+Content-Type: application/json
+
+### 3. Process Transaction (Validate + Pay + Auth)
+POST https://localhost:7001/api/v1/send/api/bgatesvc/v3/billpayment/biller/transaction/process
+Content-Type: application/json
+
+{
+  "billPaymentProductId": "41958636",
+  "amount": 2000.00,
+  "transactionRef": "1763035811",
+  "name": "Henry George",
+  "email": "henry@xyz.com",
+  "phoneNumber": "080123456789",
+  "customerId": "123456",
+  "pin": "1234",
+  "secondFa": "123456",
+  "secondFaType": "sms",
+  "channel": "mobile",
+  "enforce2FA": true,
+  "rrr": "240312345678",
+  "metadata": {
+    "customFields": [
+      {
+        "variable_name": "size",
+        "value": "40abc"
+      }
+    ]
+  }
+}
+
+### 4. Get RRR Details (Lookup)
+GET https://localhost:7001/api/v1/send/api/bgatesvc/v3/billpayment/biller/transaction/lookup/170798754692
+Content-Type: application/json
+
+### 5. Activate RRR Payment
+POST https://localhost:7001/api/v1/send/api/bgatesvc/v3/billpayment/biller/transaction/pay
+Content-Type: application/json
+
+{
+  "rrr": "170798754692",
+  "transactionRef": "290008214793",
+  "amount": 100,
+  "channel": "internetbanking",
+  "metadata": {
+    "fundingSource": "HERITAGE",
+    "payerAccountNumber": "2035468030"
+  }
+}
+
+### 6. Process RRR Payment (Alternative endpoint)
+POST https://localhost:7001/api/v1/send/api/bgatesvc/v3/billpayment/biller/transaction/pay
+Content-Type: application/json
+
+{
+  "rrr": "170798754692",
+  "transactionRef": "290008214794",
+  "amount": 2000,
+  "channel": "internetbanking",
+  "metadata": {
+    "fundingSource": "HERITAGE"
+  }
+}

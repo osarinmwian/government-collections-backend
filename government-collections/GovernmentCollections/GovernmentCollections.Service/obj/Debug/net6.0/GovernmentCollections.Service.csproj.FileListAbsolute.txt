@@ -1,0 +1,17 @@
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\GovernmentCollections.Service.csproj.AssemblyReference.cache
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\GovernmentCollections.Service.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\GovernmentCollections.Service.AssemblyInfoInputs.cache
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\GovernmentCollections.Service.AssemblyInfo.cs
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\GovernmentCollections.Service.csproj.CoreCompileInputs.cache
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net6.0\GovernmentCollections.Service.deps.json
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net6.0\GovernmentCollections.Service.dll
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net6.0\GovernmentCollections.Service.pdb
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net6.0\GovernmentCollections.Data.dll
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net6.0\GovernmentCollections.Domain.dll
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net6.0\GovernmentCollections.Data.pdb
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net6.0\GovernmentCollections.Domain.pdb
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\Governme.C1BC58EB.Up2Date
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\GovernmentCollections.Service.dll
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\refint\GovernmentCollections.Service.dll
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\GovernmentCollections.Service.pdb
+c:\Users\nosarinmwian\Desktop\collections\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net6.0\ref\GovernmentCollections.Service.dll

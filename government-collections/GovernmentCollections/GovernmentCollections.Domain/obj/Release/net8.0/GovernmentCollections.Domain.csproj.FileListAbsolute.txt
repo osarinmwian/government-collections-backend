@@ -1,0 +1,12 @@
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\bin\Release\net8.0\GovernmentCollections.Domain.deps.json
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\bin\Release\net8.0\GovernmentCollections.Domain.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\bin\Release\net8.0\GovernmentCollections.Domain.pdb
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\GovernmentCollections.Domain.csproj.AssemblyReference.cache
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\GovernmentCollections.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\GovernmentCollections.Domain.AssemblyInfoInputs.cache
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\GovernmentCollections.Domain.AssemblyInfo.cs
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\GovernmentCollections.Domain.csproj.CoreCompileInputs.cache
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\GovernmentCollections.Domain.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\refint\GovernmentCollections.Domain.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\GovernmentCollections.Domain.pdb
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Release\net8.0\ref\GovernmentCollections.Domain.dll
