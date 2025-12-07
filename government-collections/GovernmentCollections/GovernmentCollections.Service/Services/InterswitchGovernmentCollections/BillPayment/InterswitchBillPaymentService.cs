@@ -300,13 +300,14 @@ public class InterswitchBillPaymentService : IInterswitchBillPaymentService
                 _logger.LogInformation("[SETTLEMENT-{RequestId}] Settlement result: {Status} - {Message}", requestId, settlementResult.ResponseStatus, settlementResult.ResponseMessage);
                 
                 // Add settlement reference to response if successful
+                // Settlement processed successfully - log the reference
                 if (settlementResult.ResponseStatus)
                 {
-                    paymentResponse.SettlementReference = settlementResult.ResponseData;
+                    _logger.LogInformation("[SETTLEMENT-{RequestId}] Settlement reference: {SettlementRef}", requestId, settlementResult.ResponseData);
                 }
             }
             
-            _logger.LogInformation("[SUCCESS-{RequestId}] Transaction processed: {TransactionRef}", requestId, paymentResponse.TransactionReference);
+            _logger.LogInformation("[SUCCESS-{RequestId}] Transaction processed: {TransactionRef}", requestId, paymentResponse.TransactionRef);
             return paymentResponse;
         }
         catch (Exception ex)
@@ -347,7 +348,7 @@ public class InterswitchBillPaymentService : IInterswitchBillPaymentService
 
             var paymentResponse = JsonSerializer.Deserialize<InterswitchPaymentResponse>(responseContent) ?? new InterswitchPaymentResponse();
             
-            _logger.LogInformation("[SUCCESS-{RequestId}] Transaction status retrieved: {Status}", requestId, paymentResponse.PaymentStatus);
+            _logger.LogInformation("[SUCCESS-{RequestId}] Transaction status retrieved: {Status}", requestId, paymentResponse.ResponseCode);
             return paymentResponse;
         }
         catch (Exception ex)

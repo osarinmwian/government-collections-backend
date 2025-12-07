@@ -3,6 +3,7 @@ using GovernmentCollections.Service.Services.InterswitchGovernmentCollections;
 using GovernmentCollections.Service.Services.BuyPower;
 using GovernmentCollections.Service.Services.RevPay;
 using GovernmentCollections.Service.Services.Settlement;
+using GovernmentCollections.Shared.Validation;
 
 using GovernmentCollections.Domain.Settings;
 using System.Text;
@@ -44,8 +45,7 @@ public static class ServiceRegistration
         services.AddHttpClient<GovernmentCollections.Service.Services.InterswitchGovernmentCollections.BillPayment.InterswitchBillPaymentService>();
         services.AddScoped<GovernmentCollections.Service.Services.InterswitchGovernmentCollections.BillPayment.InterswitchBillPaymentService>();
         
-        // Register Interswitch validation service
-        services.AddScoped<GovernmentCollections.Service.Services.InterswitchGovernmentCollections.Validation.IPinValidationService, GovernmentCollections.Service.Services.InterswitchGovernmentCollections.Validation.PinValidationService>();
+
 
         // Register Remita services
         services.AddRemitaServices(configuration);
@@ -53,6 +53,9 @@ public static class ServiceRegistration
         // Register other payment services
         services.AddScoped<IBuyPowerService, BuyPowerService>();
         services.AddScoped<IRevPayService, RevPayService>();
+        
+        // Register shared validation service
+        services.AddScoped<IPinValidationService, PinValidationService>();
         
         // Register settlement service
         services.AddHttpClient<ISettlementService, SettlementService>(client =>
@@ -102,7 +105,7 @@ public static class ServiceRegistration
         services.AddScoped<GovernmentCollections.Service.Services.Remita.BillPayment.IRemitaBillPaymentService, GovernmentCollections.Service.Services.Remita.BillPayment.RemitaBillPaymentService>();
         services.AddScoped<GovernmentCollections.Service.Services.Remita.Payment.IRemitaPaymentService, GovernmentCollections.Service.Services.Remita.Payment.RemitaPaymentService>();
         services.AddScoped<GovernmentCollections.Service.Services.Remita.Transaction.IRemitaTransactionService, GovernmentCollections.Service.Services.Remita.Transaction.RemitaTransactionService>();
-        services.AddScoped<GovernmentCollections.Service.Services.Remita.Validation.IPinValidationService, GovernmentCollections.Service.Services.Remita.Validation.PinValidationService>();
+
         services.AddScoped<GovernmentCollections.Service.Services.Settlement.ISettlementService, GovernmentCollections.Service.Services.Settlement.SettlementService>();
         
         // Register main RemitaService

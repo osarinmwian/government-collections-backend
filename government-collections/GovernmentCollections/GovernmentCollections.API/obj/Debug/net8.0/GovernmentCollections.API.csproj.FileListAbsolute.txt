@@ -209,3 +209,5 @@ C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\Government
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\obj\Debug\net8.0\GovernmentCollections.API.genruntimeconfig.cache
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\obj\Debug\net8.0\ref\GovernmentCollections.API.dll
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\obj\Debug\net8.0\GovernmentCollections.API.sourcelink.json
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\bin\Debug\net8.0\GovernmentCollections.Shared.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\bin\Debug\net8.0\GovernmentCollections.Shared.pdb

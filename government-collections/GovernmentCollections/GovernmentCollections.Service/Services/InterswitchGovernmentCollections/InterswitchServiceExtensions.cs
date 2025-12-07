@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using GovernmentCollections.Domain.Settings;
-using GovernmentCollections.Service.Services.InterswitchGovernmentCollections.Validation;
+using GovernmentCollections.Shared.Validation;
 using GovernmentCollections.Service.Services.Settlement;
 
 namespace GovernmentCollections.Service.Services.InterswitchGovernmentCollections;
@@ -16,7 +16,7 @@ public static class InterswitchServiceExtensions
         services.AddHttpClient<InterswitchAuthService>();
         services.AddHttpClient<InterswitchTransactionService>();
 
-        services.AddScoped<InterswitchGovernmentCollections.Validation.IPinValidationService, InterswitchGovernmentCollections.Validation.PinValidationService>();
+        services.AddScoped<IPinValidationService, PinValidationService>();
         services.AddScoped<ISettlementService, SettlementService>();
         services.AddScoped<InterswitchAuthService>();
         services.AddScoped<InterswitchTransactionService>();

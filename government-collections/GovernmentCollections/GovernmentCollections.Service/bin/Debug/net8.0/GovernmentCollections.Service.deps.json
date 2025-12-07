@@ -10,6 +10,7 @@
         "dependencies": {
           "GovernmentCollections.Data": "1.0.0",
           "GovernmentCollections.Domain": "1.0.0",
+          "GovernmentCollections.Shared": "1.0.0",
           "Microsoft.Extensions.Caching.Memory": "8.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.Http": "8.0.0",
@@ -804,6 +805,19 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "GovernmentCollections.Shared/1.0.0": {
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "5.1.6",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0"
+        },
+        "runtime": {
+          "GovernmentCollections.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -1330,6 +1344,11 @@
       "sha512": ""
     },
     "GovernmentCollections.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GovernmentCollections.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

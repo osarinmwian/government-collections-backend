@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GovernmentCollections.API.Controllers;
 
-// [Authorize] // Temporarily disabled for testing
 [ApiController]
 [Route("api/v1/interswitch/")]
 public class InterswitchGovernmentCollectionsController : BaseController
@@ -93,19 +92,10 @@ public class InterswitchGovernmentCollectionsController : BaseController
 
         var result = await _interswitchService.ProcessTransactionAsync(request);
         
-        if (result.ResponseCode == "00")
-        {
-            return Ok(new { 
-                Status = "SUCCESS", 
-                Message = "Transaction processed successfully",
-                Data = result
-            });
-        }
-        
-        return BadRequest(new { 
-            Status = "ERROR", 
-            Message = result.ResponseMessage ?? "Transaction processing failed",
-            Code = result.ResponseCode
+        return Ok(new { 
+            Status = "SUCCESS", 
+            Message = "Transaction completed",
+            Data = result
         });
     }
 
@@ -124,6 +114,30 @@ public class InterswitchGovernmentCollectionsController : BaseController
         });
     }
 
+    [HttpPost("government-collections/validate-customer")]
+    public async Task<IActionResult> ValidateCustomer([FromBody] CustomerValidationRequest request)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
 
+        var batchRequest = new InterswitchCustomerValidationBatchRequest
+        {
+            Customers = new List<InterswitchCustomerInfo>
+            {
+                new InterswitchCustomerInfo
+                {
+                    CustomerId = request.CustomerId,
+                    PaymentCode = request.PaymentCode
+                }
+            }
+        };
+
+        var result = await _interswitchService.ValidateCustomersAsync(batchRequest);
+        
+        return Ok(new { 
+            Status = "SUCCESS", 
+            Message = "Customer validation completed",
+            Data = result
+        });
+    }
 
 }

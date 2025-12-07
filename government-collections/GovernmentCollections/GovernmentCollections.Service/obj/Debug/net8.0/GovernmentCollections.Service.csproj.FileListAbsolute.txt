@@ -33,3 +33,5 @@ C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\Government
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net8.0\GovernmentCollections.Service.pdb
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net8.0\ref\GovernmentCollections.Service.dll
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Service\obj\Debug\net8.0\GovernmentCollections.Service.sourcelink.json
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net8.0\GovernmentCollections.Shared.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Service\bin\Debug\net8.0\GovernmentCollections.Shared.pdb

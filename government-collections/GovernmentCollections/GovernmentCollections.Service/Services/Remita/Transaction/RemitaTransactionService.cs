@@ -1,6 +1,6 @@
 using GovernmentCollections.Domain.DTOs.Remita;
 using GovernmentCollections.Service.Services.Settlement;
-using GovernmentCollections.Service.Services.Remita.Validation;
+using GovernmentCollections.Shared.Validation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;

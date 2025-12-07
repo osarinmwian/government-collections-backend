@@ -4,7 +4,7 @@ using GovernmentCollections.Service.Services.Remita.Payment;
 using GovernmentCollections.Service.Services.Remita.Transaction;
 using GovernmentCollections.Service.Services.Remita.Invoice;
 using GovernmentCollections.Service.Services.Remita.Gateway;
-using GovernmentCollections.Service.Services.Remita.Validation;
+using GovernmentCollections.Shared.Validation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GovernmentCollections.Service.Services.Remita;

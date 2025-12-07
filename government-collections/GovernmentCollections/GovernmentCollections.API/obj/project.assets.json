@@ -1664,6 +1664,7 @@
         "dependencies": {
           "GovernmentCollections.Data": "1.0.0",
           "GovernmentCollections.Domain": "1.0.0",
+          "GovernmentCollections.Shared": "1.0.0",
           "Microsoft.Extensions.Caching.Memory": "8.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.Http": "8.0.0",
@@ -1676,6 +1677,21 @@
         },
         "runtime": {
           "bin/placeholder/GovernmentCollections.Service.dll": {}
+        }
+      },
+      "GovernmentCollections.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.Data.SqlClient": "5.1.1",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0"
+        },
+        "compile": {
+          "bin/placeholder/GovernmentCollections.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/GovernmentCollections.Shared.dll": {}
         }
       }
     }
@@ -4461,6 +4477,11 @@
       "type": "project",
       "path": "../GovernmentCollections.Service/GovernmentCollections.Service.csproj",
       "msbuildProject": "../GovernmentCollections.Service/GovernmentCollections.Service.csproj"
+    },
+    "GovernmentCollections.Shared/1.0.0": {
+      "type": "project",
+      "path": "../GovernmentCollections.Shared/GovernmentCollections.Shared.csproj",
+      "msbuildProject": "../GovernmentCollections.Shared/GovernmentCollections.Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4469,6 +4490,7 @@
       "GovernmentCollections.Data >= 1.0.0",
       "GovernmentCollections.Domain >= 1.0.0",
       "GovernmentCollections.Service >= 1.0.0",
+      "GovernmentCollections.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.0",
       "Serilog.AspNetCore >= 8.0.0",
       "Serilog.Enrichers.Environment >= 3.0.1",
@@ -4517,6 +4539,9 @@
             },
             "C:\\Users\\nosarinmwian\\Desktop\\keyMobileBackEnd\\government-collections\\GovernmentCollections\\GovernmentCollections.Service\\GovernmentCollections.Service.csproj": {
               "projectPath": "C:\\Users\\nosarinmwian\\Desktop\\keyMobileBackEnd\\government-collections\\GovernmentCollections\\GovernmentCollections.Service\\GovernmentCollections.Service.csproj"
+            },
+            "C:\\Users\\nosarinmwian\\Desktop\\keyMobileBackEnd\\government-collections\\GovernmentCollections\\GovernmentCollections.Shared\\GovernmentCollections.Shared.csproj": {
+              "projectPath": "C:\\Users\\nosarinmwian\\Desktop\\keyMobileBackEnd\\government-collections\\GovernmentCollections\\GovernmentCollections.Shared\\GovernmentCollections.Shared.csproj"
             }
           }
         }

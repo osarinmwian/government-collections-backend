@@ -34,11 +34,12 @@ public class InterswitchTransactionService
         try
         {
             var token = await _authService.GetValidTokenAsync();
+            var terminalId = await _authService.GetTerminalIdAsync();
             var requestUrl = $"{_settings.ServicesUrl}/quicktellerservice/api/v5/billinquiry";
             
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            _httpClient.DefaultRequestHeaders.Add("TerminalID", _settings.TerminalId);
+            _httpClient.DefaultRequestHeaders.Add("TerminalID", terminalId);
 
             var json = JsonSerializer.Serialize(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -75,12 +76,14 @@ public class InterswitchTransactionService
         try
         {
             var token = await _authService.GetValidTokenAsync();
+            var terminalId = await _authService.GetTerminalIdAsync();
             var requestUrl = $"{_settings.ServicesUrl}/quicktellerservice/api/v5/Transactions";
             
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            _httpClient.DefaultRequestHeaders.Add("TerminalID", _settings.TerminalId);
+            _httpClient.DefaultRequestHeaders.Add("TerminalID", terminalId);
 
+            request.TerminalId = terminalId;
             var json = JsonSerializer.Serialize(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -98,7 +101,7 @@ public class InterswitchTransactionService
             var paymentResponse = JsonSerializer.Deserialize<InterswitchPaymentResponse>(responseContent);
 
             _logger.LogInformation("[SUCCESS-{RequestId}] Payment processed for reference {Reference}", requestId, request.RequestReference);
-            return paymentResponse ?? new InterswitchPaymentResponse { ResponseCode = "99", ResponseMessage = "Invalid response" };
+            return paymentResponse ?? new InterswitchPaymentResponse { ResponseCode = "99", ResponseDescription = "Invalid response" };
         }
         catch (Exception ex)
         {
@@ -108,7 +111,7 @@ public class InterswitchTransactionService
         }
     }
 
-    public async Task<InterswitchCustomerValidationResponse> ValidateCustomersAsync(InterswitchCustomerValidationRequest request)
+    public async Task<InterswitchCustomerValidationResponse> ValidateCustomersAsync(InterswitchCustomerValidationBatchRequest request)
     {
         var requestId = Guid.NewGuid().ToString("N")[..8];
         var startTime = DateTime.UtcNow;
@@ -116,12 +119,15 @@ public class InterswitchTransactionService
         try
         {
             var token = await _authService.GetValidTokenAsync();
+            var terminalId = await _authService.GetTerminalIdAsync();
             var requestUrl = $"{_settings.ServicesUrl}/quicktellerservice/api/v5/Transactions/validatecustomers";
             
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            _httpClient.DefaultRequestHeaders.Add("TerminalID", _settings.TerminalId);
+            _httpClient.DefaultRequestHeaders.Add("TerminalID", terminalId);
+            _httpClient.DefaultRequestHeaders.ExpectContinue = false;
 
+            request.TerminalId = terminalId;
             var json = JsonSerializer.Serialize(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -131,21 +137,32 @@ public class InterswitchTransactionService
             var responseContent = await response.Content.ReadAsStringAsync();
             var duration = DateTime.UtcNow.Subtract(startTime).TotalMilliseconds;
             
-            _logger.LogInformation("[INBOUND-{RequestId}] ValidateCustomersAsync: Status={StatusCode} | Duration={Duration}ms", 
-                requestId, response.StatusCode, duration);
+            _logger.LogInformation("[INBOUND-{RequestId}] ValidateCustomersAsync: Status={StatusCode} | Duration={Duration}ms | Response={Response}", 
+                requestId, response.StatusCode, duration, responseContent);
             
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                return new InterswitchCustomerValidationResponse 
+                { 
+                    ResponseCode = ((int)response.StatusCode).ToString(), 
+                    ResponseCodeGrouping = "FAILED" 
+                };
+            }
 
             var validationResponse = JsonSerializer.Deserialize<InterswitchCustomerValidationResponse>(responseContent);
 
             _logger.LogInformation("[SUCCESS-{RequestId}] Customer validation successful", requestId);
-            return validationResponse ?? new InterswitchCustomerValidationResponse { ResponseCode = "99", ResponseMessage = "Invalid response" };
+            return validationResponse ?? new InterswitchCustomerValidationResponse { ResponseCode = "99", ResponseCodeGrouping = "FAILED" };
         }
         catch (Exception ex)
         {
             var duration = DateTime.UtcNow.Subtract(startTime).TotalMilliseconds;
             _logger.LogError(ex, "[ERROR-{RequestId}] ValidateCustomersAsync: Duration={Duration}ms | Exception: {Message}", requestId, duration, ex.Message);
-            throw;
+            return new InterswitchCustomerValidationResponse 
+            { 
+                ResponseCode = "99", 
+                ResponseCodeGrouping = "FAILED" 
+            };
         }
     }
 
@@ -157,11 +174,12 @@ public class InterswitchTransactionService
         try
         {
             var token = await _authService.GetValidTokenAsync();
+            var terminalId = await _authService.GetTerminalIdAsync();
             var requestUrl = $"{_settings.ServicesUrl}/quicktellerservice/api/v5/Transactions?requestRef={requestReference}";
             
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            _httpClient.DefaultRequestHeaders.Add("TerminalID", _settings.TerminalId);
+            _httpClient.DefaultRequestHeaders.Add("TerminalID", terminalId);
 
             _logger.LogInformation("[OUTBOUND-{RequestId}] VerifyTransactionAsync: GET {Url}", requestId, requestUrl);
             
@@ -177,7 +195,7 @@ public class InterswitchTransactionService
             var verificationResponse = JsonSerializer.Deserialize<InterswitchPaymentResponse>(responseContent);
 
             _logger.LogInformation("[SUCCESS-{RequestId}] Transaction verification successful", requestId);
-            return verificationResponse ?? new InterswitchPaymentResponse { ResponseCode = "99", ResponseMessage = "Invalid response" };
+            return verificationResponse ?? new InterswitchPaymentResponse { ResponseCode = "99", ResponseDescription = "Invalid response" };
         }
         catch (Exception ex)
         {
@@ -195,11 +213,12 @@ public class InterswitchTransactionService
         try
         {
             var token = await _authService.GetValidTokenAsync();
+            var terminalId = await _authService.GetTerminalIdAsync();
             var requestUrl = $"{_settings.ServicesUrl}/quicktellerservice/api/v5/transactions?userId={userId}&page={page}&pageSize={pageSize}";
             
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-            _httpClient.DefaultRequestHeaders.Add("TerminalID", _settings.TerminalId);
+            _httpClient.DefaultRequestHeaders.Add("TerminalID", terminalId);
 
             _logger.LogInformation("[OUTBOUND-{RequestId}] GetTransactionHistoryAsync: GET {Url}", requestId, requestUrl);
             

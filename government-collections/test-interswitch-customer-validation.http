@@ -1,0 +1,11 @@
+### Test Interswitch Customer Validation Endpoint
+POST {{base-url}}/api/v1/interswitch/transactions/validatecustomers
+Content-Type: application/json
+
+{
+    "customerId": "1890003338",
+    "paymentCode": "0514559125550"
+}
+
+### Variables
+@base-url = https://localhost:7001

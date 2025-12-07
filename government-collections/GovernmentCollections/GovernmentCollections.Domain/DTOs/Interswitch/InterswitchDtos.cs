@@ -112,65 +112,47 @@ public class InterswitchServicesResponse
 
 public class InterswitchPaymentRequest
 {
-    [JsonPropertyName("billerId")]
-    public int BillerId { get; set; }
+    [JsonPropertyName("TerminalId")]
+    public string TerminalId { get; set; } = string.Empty;
 
-    [JsonPropertyName("customerReference")]
-    public string CustomerReference { get; set; } = string.Empty;
+    [JsonPropertyName("paymentCode")]
+    public string PaymentCode { get; set; } = string.Empty;
 
-    [JsonPropertyName("amount")]
-    public decimal Amount { get; set; }
+    [JsonPropertyName("customerId")]
+    public string CustomerId { get; set; } = string.Empty;
+
+    [JsonPropertyName("customerMobile")]
+    public string CustomerMobile { get; set; } = string.Empty;
 
     [JsonPropertyName("customerEmail")]
     public string CustomerEmail { get; set; } = string.Empty;
 
-    [JsonPropertyName("customerPhone")]
-    public string CustomerPhone { get; set; } = string.Empty;
+    [JsonPropertyName("amount")]
+    public decimal Amount { get; set; }
 
     [JsonPropertyName("requestReference")]
     public string RequestReference { get; set; } = string.Empty;
-
-    [JsonPropertyName("SecondFa")]
-    public string SecondFa { get; set; } = string.Empty;
-
-    [JsonPropertyName("SecondFaType")]
-    public string SecondFaType { get; set; } = string.Empty;
-
-    [JsonPropertyName("Channel")]
-    public string Channel { get; set; } = string.Empty;
-
-    [JsonPropertyName("Enforce2FA")]
-    public bool Enforce2FA { get; set; }
-
-    [JsonPropertyName("Pin")]
-    public string Pin { get; set; } = string.Empty;
 }
 
 public class InterswitchPaymentResponse
 {
-    [JsonPropertyName("responseCode")]
+    [JsonPropertyName("ResponseCode")]
     public string ResponseCode { get; set; } = string.Empty;
 
-    [JsonPropertyName("responseMessage")]
-    public string ResponseMessage { get; set; } = string.Empty;
+    [JsonPropertyName("ResponseDescription")]
+    public string ResponseDescription { get; set; } = string.Empty;
 
-    [JsonPropertyName("transactionReference")]
-    public string TransactionReference { get; set; } = string.Empty;
+    [JsonPropertyName("ResponseCodeGrouping")]
+    public string ResponseCodeGrouping { get; set; } = string.Empty;
 
-    [JsonPropertyName("amount")]
-    public decimal Amount { get; set; }
+    [JsonPropertyName("TransactionRef")]
+    public string TransactionRef { get; set; } = string.Empty;
 
-    [JsonPropertyName("surcharge")]
-    public decimal Surcharge { get; set; }
+    [JsonPropertyName("ApprovedAmount")]
+    public string ApprovedAmount { get; set; } = string.Empty;
 
-    [JsonPropertyName("totalAmount")]
-    public decimal TotalAmount { get; set; }
-
-    [JsonPropertyName("paymentStatus")]
-    public string PaymentStatus { get; set; } = string.Empty;
-
-    [JsonPropertyName("settlementReference")]
-    public string SettlementReference { get; set; } = string.Empty;
+    [JsonPropertyName("AdditionalInfo")]
+    public object AdditionalInfo { get; set; } = new();
 }
 
 public class InterswitchBillInquiryRequest
@@ -235,20 +217,47 @@ public class InterswitchCustomerValidationRequest
 
 public class InterswitchCustomerValidationResponse
 {
-    [JsonPropertyName("responseCode")]
+    [JsonPropertyName("ResponseCode")]
     public string ResponseCode { get; set; } = string.Empty;
 
-    [JsonPropertyName("responseMessage")]
-    public string ResponseMessage { get; set; } = string.Empty;
+    [JsonPropertyName("ResponseCodeGrouping")]
+    public string ResponseCodeGrouping { get; set; } = string.Empty;
 
-    [JsonPropertyName("customerName")]
-    public string CustomerName { get; set; } = string.Empty;
+    [JsonPropertyName("Customers")]
+    public List<InterswitchValidatedCustomer> Customers { get; set; } = new();
+}
 
-    [JsonPropertyName("amount")]
+public class InterswitchValidatedCustomer
+{
+    [JsonPropertyName("TerminalId")]
+    public string TerminalId { get; set; } = string.Empty;
+
+    [JsonPropertyName("BillerId")]
+    public int BillerId { get; set; }
+
+    [JsonPropertyName("PaymentCode")]
+    public string PaymentCode { get; set; } = string.Empty;
+
+    [JsonPropertyName("CustomerId")]
+    public string CustomerId { get; set; } = string.Empty;
+
+    [JsonPropertyName("ResponseCode")]
+    public string ResponseCode { get; set; } = string.Empty;
+
+    [JsonPropertyName("FullName")]
+    public string FullName { get; set; } = string.Empty;
+
+    [JsonPropertyName("Amount")]
     public decimal Amount { get; set; }
 
-    [JsonPropertyName("paymentItems")]
-    public List<InterswitchPaymentItem> PaymentItems { get; set; } = new();
+    [JsonPropertyName("AmountType")]
+    public int AmountType { get; set; }
+
+    [JsonPropertyName("AmountTypeDescription")]
+    public string AmountTypeDescription { get; set; } = string.Empty;
+
+    [JsonPropertyName("Surcharge")]
+    public decimal Surcharge { get; set; }
 }
 
 public class InterswitchTransactionHistoryResponse
@@ -333,6 +342,9 @@ public class InterswitchCustomerValidationBatchRequest
 {
     [JsonPropertyName("customers")]
     public List<InterswitchCustomerInfo> Customers { get; set; } = new();
+
+    [JsonPropertyName("TerminalId")]
+    public string TerminalId { get; set; } = string.Empty;
 }
 
 public class InterswitchCustomerInfo
@@ -387,4 +399,13 @@ public static class InterswitchValidationHelper
 
         return (true, "Validation successful");
     }
+}
+
+public class CustomerValidationRequest
+{
+    [JsonPropertyName("customerId")]
+    public string CustomerId { get; set; } = string.Empty;
+
+    [JsonPropertyName("paymentCode")]
+    public string PaymentCode { get; set; } = string.Empty;
 }

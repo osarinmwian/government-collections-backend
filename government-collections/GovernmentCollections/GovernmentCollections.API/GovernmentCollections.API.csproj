@@ -19,6 +19,7 @@
     <ProjectReference Include="..\GovernmentCollections.Service\GovernmentCollections.Service.csproj" />
     <ProjectReference Include="..\GovernmentCollections.Data\GovernmentCollections.Data.csproj" />
     <ProjectReference Include="..\GovernmentCollections.Domain\GovernmentCollections.Domain.csproj" />
+    <ProjectReference Include="..\GovernmentCollections.Shared\GovernmentCollections.Shared.csproj" />
   </ItemGroup>
 
 </Project>

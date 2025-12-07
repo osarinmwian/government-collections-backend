@@ -6,7 +6,7 @@ using GovernmentCollections.Domain.Settings;
 using GovernmentCollections.Service.Services.InterswitchGovernmentCollections.Authentication;
 using GovernmentCollections.Service.Services.InterswitchGovernmentCollections.Transaction;
 using GovernmentCollections.Service.Services.InterswitchGovernmentCollections.BillPayment;
-using GovernmentCollections.Service.Services.InterswitchGovernmentCollections.Validation;
+using GovernmentCollections.Shared.Validation;
 using GovernmentCollections.Service.Services.Settlement;
 
 namespace GovernmentCollections.Service.Services.InterswitchGovernmentCollections;
@@ -66,9 +66,9 @@ public class InterswitchGovernmentCollectionsService : IInterswitchGovernmentCol
         return await _billPaymentService.GetServiceOptionsAsync(serviceId);
     }
 
-    public async Task<List<InterswitchPaymentItem>> GetPaymentItemsAsync(int billerId, string customerReference)
+    public Task<List<InterswitchPaymentItem>> GetPaymentItemsAsync(int billerId, string customerReference)
     {
-        return new List<InterswitchPaymentItem>();
+        return Task.FromResult(new List<InterswitchPaymentItem>());
     }
 
     public async Task<InterswitchBillInquiryResponse> BillInquiryAsync(InterswitchBillInquiryRequest request)
@@ -95,7 +95,7 @@ public class InterswitchGovernmentCollectionsService : IInterswitchGovernmentCol
 
     public async Task<InterswitchCustomerValidationResponse> ValidateCustomersAsync(InterswitchCustomerValidationBatchRequest request)
     {
-        return new InterswitchCustomerValidationResponse();
+        return await _transactionService.ValidateCustomersAsync(request);
     }
 
     public async Task<InterswitchPaymentResponse> ProcessTransactionAsync(InterswitchTransactionRequest request)
@@ -106,7 +106,7 @@ public class InterswitchGovernmentCollectionsService : IInterswitchGovernmentCol
             var pinValid = await _pinValidationService.ValidatePinAsync(request.CustomerId, request.Pin);
             if (!pinValid)
             {
-                return new InterswitchPaymentResponse { ResponseCode = "01", ResponseMessage = "Invalid PIN" };
+                return new InterswitchPaymentResponse { ResponseCode = "01", ResponseDescription = "Invalid PIN" };
             }
 
             // Validate 2FA if required
@@ -115,7 +115,7 @@ public class InterswitchGovernmentCollectionsService : IInterswitchGovernmentCol
                 var twoFaValid = await _pinValidationService.Validate2FAAsync(request.CustomerId, request.SecondFa, request.SecondFaType);
                 if (!twoFaValid)
                 {
-                    return new InterswitchPaymentResponse { ResponseCode = "01", ResponseMessage = "Invalid 2FA" };
+                    return new InterswitchPaymentResponse { ResponseCode = "01", ResponseDescription = "Invalid 2FA" };
                 }
             }
 
@@ -123,8 +123,8 @@ public class InterswitchGovernmentCollectionsService : IInterswitchGovernmentCol
             var paymentRequest = new InterswitchPaymentRequest
             {
                 RequestReference = request.RequestReference,
-                CustomerReference = request.CustomerId,
-                CustomerPhone = request.CustomerMobile,
+                CustomerId = request.CustomerId,
+                CustomerMobile = request.CustomerMobile,
                 CustomerEmail = request.CustomerEmail,
                 Amount = request.Amount
             };
@@ -149,7 +149,7 @@ public class InterswitchGovernmentCollectionsService : IInterswitchGovernmentCol
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error processing Interswitch transaction");
-            return new InterswitchPaymentResponse { ResponseCode = "99", ResponseMessage = "Transaction processing failed" };
+            return new InterswitchPaymentResponse { ResponseCode = "99", ResponseDescription = "Transaction processing failed" };
         }
     }
 

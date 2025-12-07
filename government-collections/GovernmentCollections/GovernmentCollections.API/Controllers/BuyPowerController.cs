@@ -1,6 +1,6 @@
 using GovernmentCollections.Domain.DTOs;
 using GovernmentCollections.Domain.DTOs.PinValidation;
-using GovernmentCollections.Service.Services.Remita.Validation;
+using GovernmentCollections.Shared.Validation;
 using GovernmentCollections.Service.Services.BuyPower;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
