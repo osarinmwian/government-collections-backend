@@ -1,231 +1,102 @@
-using GovernmentCollections.Domain.Common;
-using GovernmentCollections.Domain.DTOs;
+using GovernmentCollections.Domain.DTOs.RevPay;
+using GovernmentCollections.Service.Services.RevPay;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Text.Json;
 
 namespace GovernmentCollections.API.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/v1/revpay")]
 [ApiController]
 public class RevPayController : ControllerBase
 {
-    private readonly ILogger<RevPayController> _logger;
+    private readonly IRevPayService _revPayService;
 
-    public RevPayController(ILogger<RevPayController> logger)
+    public RevPayController(IRevPayService revPayService)
     {
-        _logger = logger;
-    }
-
-    [HttpPost("verify-reference")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<object>>> VerifyReference([FromBody] object request)
-    {
-        try
-        {
-            _logger.LogInformation("Inbound - RevPay Verify Reference: {Request}", JsonSerializer.Serialize(request));
-            
-            await Task.Delay(100);
-            var result = new { IsValid = true, Reference = "REF123456", Status = "ACTIVE" };
-
-            _logger.LogInformation("Outbound - RevPay Verify Reference Response: {Response}", JsonSerializer.Serialize(result));
-            return Ok(new ApiResponse<object> { Success = true, Message = "Reference verification successful", Data = result });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while verifying reference");
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new ApiResponse<string> { Success = false, Message = "An error occurred while verifying the reference" });
-        }
-    }
-
-    [HttpPost("notify-payment")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> NotifyPaymentAsync([FromBody] object request)
-    {
-        try
-        {
-            _logger.LogInformation("Inbound - RevPay Notify Payment: {Request}", JsonSerializer.Serialize(request));
-            
-            await Task.Delay(100);
-            var response = new { NotificationId = Guid.NewGuid().ToString(), Status = "SUCCESS" };
-
-            _logger.LogInformation("Outbound - RevPay Notify Payment Response: {Response}", JsonSerializer.Serialize(response));
-            return Ok(new ApiResponse<object> { Success = true, Message = "Payment notification successful", Data = response });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while notifying payment");
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new ApiResponse<object> { Success = false, Message = "An error occurred while processing payment notification" });
-        }
+        _revPayService = revPayService;
     }
 
     [HttpPost("billtypes")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<object>>> GetBillTypes([FromBody] object request)
+    public async Task<IActionResult> GetBillTypes()
     {
-        try
-        {
-            _logger.LogInformation("Inbound - RevPay Get Bill Types: {Request}", JsonSerializer.Serialize(request));
-            
-            await Task.Delay(100);
-            var response = new[]
-            {
-                new { BillTypeId = "TAX001", BillTypeName = "Income Tax", Category = "Tax" },
-                new { BillTypeId = "LIC001", BillTypeName = "Business License", Category = "License" },
-                new { BillTypeId = "FEE001", BillTypeName = "Processing Fee", Category = "Fee" }
-            };
-
-            _logger.LogInformation("Outbound - RevPay Get Bill Types Response: {Response}", JsonSerializer.Serialize(response));
-            return Ok(new ApiResponse<object> { Success = true, Message = "Bill types retrieved successfully", Data = response });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving bill types");
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new ApiResponse<string> { Success = false, Message = "An error occurred while retrieving bill types" });
-        }
+        var result = await _revPayService.GetBillTypesAsync();
+        return Ok(result);
     }
 
-    [HttpPost("generate-bill")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<object>>> GenerateBill([FromBody] object request)
+    [HttpPost("validate")]
+    public async Task<IActionResult> ValidateReference([FromBody] RevPayValidateRequest request)
     {
-        try
-        {
-            _logger.LogInformation("Inbound - RevPay Generate Bill: {Request}", JsonSerializer.Serialize(request));
-            
-            await Task.Delay(100);
-            var result = new 
-            { 
-                BillId = Guid.NewGuid().ToString(), 
-                BillNumber = $"BILL{DateTime.Now:yyyyMMddHHmmss}", 
-                Amount = 50000, 
-                Status = "GENERATED" 
-            };
-
-            _logger.LogInformation("Outbound - RevPay Generate Bill Response: {Response}", JsonSerializer.Serialize(result));
-            return Ok(new ApiResponse<object> { Success = true, Message = "Bill generated successfully", Data = result });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while generating bill");
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new ApiResponse<string> { Success = false, Message = "An error occurred while generating the bill" });
-        }
+        if (!ModelState.IsValid) 
+            return BadRequest(new { status = "01", message = "Invalid request", data = (object?)null });
+        
+        var result = await _revPayService.ValidateReferenceAsync(request);
+        return Ok(result);
     }
 
-    [HttpPost("VerifyPid")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> VerifyPidAsync([FromBody] object request)
+    [HttpPost("payment")]
+    public async Task<IActionResult> ProcessPayment([FromBody] RevPayPaymentRequest request)
     {
-        try
-        {
-            _logger.LogInformation("Inbound - RevPay Verify PID: {Request}", JsonSerializer.Serialize(request));
+        if (request == null)
+            return BadRequest(new { status = "01", message = "Request body is required", data = (object?)null });
             
-            await Task.Delay(100);
-            var result = new { PidId = "PID123456", IsValid = true, Status = "VERIFIED" };
-
-            _logger.LogInformation("Outbound - RevPay Verify PID Response: {Response}", JsonSerializer.Serialize(result));
-            return Ok(new ApiResponse<object> { Success = true, Message = "PID verification successful", Data = result });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while verifying PID");
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new ApiResponse<string> { Success = false, Message = "An unexpected error occurred" });
-        }
+        if (!ModelState.IsValid) 
+            return BadRequest(new { status = "01", message = "Invalid request", data = ModelState });
+        
+        var result = await _revPayService.ProcessPaymentAsync(request);
+        return Ok(result);
     }
 
-    [HttpPost("GetAgencyList")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetAgencyList([FromBody] object request)
+    [HttpPost("webguid")]
+    public async Task<IActionResult> GenerateWebGuid([FromBody] RevPayWebGuidRequest request)
     {
-        try
-        {
-            _logger.LogInformation("Inbound - RevPay Get Agency List: {Request}", JsonSerializer.Serialize(request));
+        if (request == null)
+            return BadRequest(new { status = "01", message = "Request body is required", data = (object?)null });
             
-            await Task.Delay(100);
-            var result = new[]
-            {
-                new { AgencyId = "AG001", AgencyName = "Federal Inland Revenue Service", Code = "FIRS" },
-                new { AgencyId = "AG002", AgencyName = "Lagos State Internal Revenue Service", Code = "LASIRS" },
-                new { AgencyId = "AG003", AgencyName = "Nigeria Customs Service", Code = "CUSTOMS" }
-            };
-
-            _logger.LogInformation("Outbound - RevPay Get Agency List Response: {Response}", JsonSerializer.Serialize(result));
-            return Ok(new ApiResponse<object> { Success = true, Message = "Agency list retrieved successfully", Data = result });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving agency list");
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new ApiResponse<string> { Success = false, Message = "An unexpected error occurred" });
-        }
+        if (!ModelState.IsValid) 
+            return BadRequest(new { status = "01", message = "Invalid request", data = ModelState });
+        
+        var result = await _revPayService.GenerateWebGuidAsync(request);
+        return Ok(result);
     }
 
-    [HttpPost("GetRevenueList")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetRevenueList([FromBody] object request)
+    [HttpPost("verify-pid")]
+    public async Task<IActionResult> VerifyPid([FromBody] RevPayPidVerificationRequest request)
     {
-        try
-        {
-            _logger.LogInformation("Inbound - RevPay Get Revenue List: {Request}", JsonSerializer.Serialize(request));
+        if (request == null)
+            return BadRequest(new { status = "01", message = "Request body is required", data = (object?)null });
             
-            await Task.Delay(100);
-            var result = new[]
-            {
-                new { RevenueId = "REV001", RevenueName = "Personal Income Tax", Amount = 100000 },
-                new { RevenueId = "REV002", RevenueName = "Company Income Tax", Amount = 500000 },
-                new { RevenueId = "REV003", RevenueName = "Value Added Tax", Amount = 250000 }
-            };
-
-            _logger.LogInformation("Outbound - RevPay Get Revenue List Response: {Response}", JsonSerializer.Serialize(result));
-            return Ok(new ApiResponse<object> { Success = true, Message = "Revenue list retrieved successfully", Data = result });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving revenue list");
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new ApiResponse<string> { Success = false, Message = "An unexpected error occurred" });
-        }
+        if (string.IsNullOrEmpty(request.Pid))
+            return BadRequest(new { status = "01", message = "PID is required", data = (object?)null });
+        
+        var result = await _revPayService.VerifyPidAsync(request);
+        return Ok(result);
     }
 
-    [HttpPost("ReprintReceipt")]
-    [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> ReprintReceiptAsync([FromBody] object request)
+    [HttpPost("receipt")]
+    public async Task<IActionResult> GetReceipt([FromBody] RevPayReceiptRequest request)
     {
-        try
-        {
-            _logger.LogInformation("Inbound - RevPay Reprint Receipt: {Request}", JsonSerializer.Serialize(request));
+        if (request == null)
+            return BadRequest(new { status = "01", message = "Request body is required", data = (object?)null });
             
-            await Task.Delay(100);
-            var result = new 
-            { 
-                ReceiptId = Guid.NewGuid().ToString(), 
-                ReceiptNumber = $"RCP{DateTime.Now:yyyyMMddHHmmss}", 
-                Status = "REPRINTED" 
-            };
+        if (string.IsNullOrEmpty(request.PaymentRef))
+            return BadRequest(new { status = "01", message = "PaymentRef is required", data = (object?)null });
+        
+        var result = await _revPayService.GetReceiptAsync(request);
+        return Ok(result);
+    }
 
-            _logger.LogInformation("Outbound - RevPay Reprint Receipt Response: {Response}", JsonSerializer.Serialize(result));
-            return Ok(new ApiResponse<object> { Success = true, Message = "Receipt reprinted successfully", Data = result });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while reprinting receipt");
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new ApiResponse<string> { Success = false, Message = "An unexpected error occurred" });
-        }
+    [HttpPost("process-transaction")]
+    public async Task<IActionResult> ProcessTransaction([FromBody] RevPayTransactionRequest request)
+    {
+        if (request == null)
+            return BadRequest(new { status = "01", message = "Request body is required", data = (object?)null });
+            
+        if (!ModelState.IsValid) 
+            return BadRequest(new { status = "01", message = "Invalid request", data = ModelState });
+        
+        if (string.IsNullOrEmpty(request.AccountNumber))
+            return BadRequest(new { status = "01", message = "AccountNumber is required", data = (object?)null });
+
+        var result = await _revPayService.ProcessTransactionWithAuthAsync(request);
+        return Ok(result);
     }
 }

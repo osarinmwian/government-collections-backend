@@ -208,8 +208,4 @@ C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\Government
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\obj\Debug\net8.0\GovernmentCollections.API.pdb
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\obj\Debug\net8.0\GovernmentCollections.API.genruntimeconfig.cache
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\obj\Debug\net8.0\ref\GovernmentCollections.API.dll
-C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\bin\Debug\net8.0\publish\web.config
-C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\bin\Debug\net8.0\publish\appsettings.json
-C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\bin\Debug\net8.0\publish\GovernmentCollections.API.deps.json
-C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\bin\Debug\net8.0\publish\GovernmentCollections.API.runtimeconfig.json
-C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\bin\Debug\net8.0\publish\GovernmentCollections.API.staticwebassets.endpoints.json
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.API\obj\Debug\net8.0\GovernmentCollections.API.sourcelink.json

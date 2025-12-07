@@ -11,6 +11,7 @@ public class RemitaInitiatePaymentDto
     public string PayerEmail { get; set; } = string.Empty;
     public string PayerPhone { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
+    public string AccountNumber { get; set; } = string.Empty;
 }
 
 public class RemitaPaymentCallbackDto
@@ -46,6 +47,7 @@ public class RemitaMandateDto
     public string StartDate { get; set; } = string.Empty;
     public string EndDate { get; set; } = string.Empty;
     public string MandateType { get; set; } = string.Empty;
+    public string AccountNumber { get; set; } = string.Empty;
 }
 
 public class RemitaDebitMandateDto
@@ -55,6 +57,7 @@ public class RemitaDebitMandateDto
     public string FundingAccount { get; set; } = string.Empty;
     public string FundingBankCode { get; set; } = string.Empty;
     public string DebitDate { get; set; } = string.Empty;
+    public string AccountNumber { get; set; } = string.Empty;
 }
 
 public class RemitaCustomerValidationDto
@@ -83,6 +86,8 @@ public class RemitaTransactionInitiateDto
     public string CustomerId { get; set; } = string.Empty;
     [JsonPropertyName("username")]
     public string Username { get; set; } = string.Empty;
+    [JsonPropertyName("accountNumber")]
+    public string AccountNumber { get; set; } = string.Empty;
     [JsonPropertyName("metadata")]
     public RemitaMetadata? Metadata { get; set; }
     [JsonPropertyName("pin")]
@@ -107,6 +112,8 @@ public class RemitaPaymentProcessDto
     public decimal Amount { get; set; }
     [JsonPropertyName("channel")]
     public string Channel { get; set; } = string.Empty;
+    [JsonPropertyName("accountNumber")]
+    public string AccountNumber { get; set; } = string.Empty;
     [JsonPropertyName("metadata")]
     public RemitaPaymentMetadata? Metadata { get; set; }
     [JsonIgnore]
@@ -165,6 +172,8 @@ public class RemitaValidateCustomerRequest
     public string BillPaymentProductId { get; set; } = string.Empty;
     [JsonPropertyName("customerId")]
     public string CustomerId { get; set; } = string.Empty;
+    [JsonIgnore]
+    public string Username { get; set; } = string.Empty;
 }
 
 public class RemitaValidateCustomerResponse
@@ -184,6 +193,7 @@ public class RemitaPaymentRequest
     public string Email { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string TransactionRef { get; set; } = string.Empty;
+    public string AccountNumber { get; set; } = string.Empty;
 }
 
 public class RemitaPaymentResponse
@@ -407,6 +417,7 @@ public class RemitaInvoiceRequest
     public string PayerEmail { get; set; } = string.Empty;
     public string PayerPhone { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
+    public string AccountNumber { get; set; } = string.Empty;
 }
 
 public class RemitaRrrPaymentRequest
@@ -419,6 +430,8 @@ public class RemitaRrrPaymentRequest
     public decimal Amount { get; set; }
     [JsonPropertyName("channel")]
     public string Channel { get; set; } = "internetbanking";
+    [JsonPropertyName("accountNumber")]
+    public string AccountNumber { get; set; } = string.Empty;
     [JsonPropertyName("metadata")]
     public RemitaRrrMetadata? Metadata { get; set; }
 }

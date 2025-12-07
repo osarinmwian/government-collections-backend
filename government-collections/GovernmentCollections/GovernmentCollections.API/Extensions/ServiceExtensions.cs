@@ -39,23 +39,12 @@ public static class ServiceExtensions
         services.AddScoped<IPaymentRepository, PaymentRepository>();
 
         // Services
-        services.AddScoped<GovernmentCollections.Service.Services.Remita.IPinValidationService, GovernmentCollections.Service.Services.Remita.PinValidationService>();
-        services.AddScoped<GovernmentCollections.Service.Services.PinValidation.IPinValidationService, GovernmentCollections.Service.Services.PinValidation.PinValidationService>();
-        
-        // Controller-specific services
-        services.AddScoped<IRemitaService, RemitaService>();
-        services.AddScoped<IRemitaAuthService, RemitaAuthService>();
-        services.AddScoped<IRemitaInvoiceService, RemitaInvoiceService>();
-        services.AddScoped<IRemitaPaymentGatewayService, RemitaPaymentGatewayService>();
         services.AddScoped<IBuyPowerService, BuyPowerService>();
         services.AddScoped<IInterswitchGovernmentCollectionsService, InterswitchGovernmentCollectionsService>();
-        services.AddScoped<IRevPayService, RevPayService>();
+        services.AddRevPayServices();
+        services.AddScoped<IRemitaService, RemitaService>();
 
         // Gateways
-        services.AddHttpClient<IRemitaService, RemitaService>(client =>
-        {
-            client.Timeout = TimeSpan.FromSeconds(60);
-        });
         services.AddHttpClient();
         services.AddScoped<IPaymentGatewayFactory, PaymentGatewayFactory>();
 

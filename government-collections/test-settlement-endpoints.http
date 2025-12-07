@@ -1,0 +1,59 @@
+### Settlement is now integrated automatically into Remita, Interswitch, and RevPay transactions
+### No separate endpoint needed - settlement happens after successful PIN/2FA validation
+
+### Test Remita Transaction with Settlement
+POST http://localhost:5000/api/v1/send/api/bgatesvc/v3/billpayment/biller/transaction/process
+Content-Type: application/json
+
+{
+  "billPaymentProductId": "12345",
+  "amount": 1000.00,
+  "transactionRef": "REMITA_TXN_001",
+  "name": "Test Customer",
+  "email": "test@example.com",
+  "phoneNumber": "08012345678",
+  "customerId": "CUST001",
+  "accountNumber": "1234567890",
+  "pin": "1234",
+  "enforce2FA": false,
+  "secondFa": "",
+  "secondFaType": "",
+  "channel": "MOBILE"
+}
+
+### Test Interswitch Transaction with Settlement
+POST http://localhost:5000/api/v1/interswitchgovernmentcollections/process-transaction
+Content-Type: application/json
+
+{
+  "paymentCode": "12345",
+  "customerId": "1234567890",
+  "customerMobile": "08012345678",
+  "customerEmail": "test@example.com",
+  "amount": 2000.00,
+  "requestReference": "ISW_TXN_001",
+  "secondFa": "",
+  "secondFaType": "",
+  "channel": "MOBILE",
+  "enforce2FA": false,
+  "pin": "1234"
+}
+
+### Test RevPay Transaction with Settlement
+POST http://localhost:5000/api/v1/revpay/process-transaction
+Content-Type: application/json
+
+{
+  "pid": "12345",
+  "amount": 1500.00,
+  "transactionRef": "REVPAY_TXN_001",
+  "name": "Test Customer",
+  "email": "test@example.com",
+  "phoneNumber": "08012345678",
+  "accountNumber": "1234567890",
+  "pin": "1234",
+  "enforce2FA": false,
+  "secondFa": "",
+  "secondFaType": "",
+  "channel": "MOBILE"
+}

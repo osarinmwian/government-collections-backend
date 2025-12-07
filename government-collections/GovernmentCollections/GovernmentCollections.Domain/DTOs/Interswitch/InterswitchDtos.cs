@@ -5,10 +5,10 @@ namespace GovernmentCollections.Domain.DTOs.Interswitch;
 public class InterswitchAuthRequest
 {
     [JsonPropertyName("userName")]
-    public string UserName { get; set; } = "IKIA72C65D005F93F30E573EFEAC04FA6DD9E4D344B1";
+    public string UserName { get; set; } = string.Empty;
 
     [JsonPropertyName("password")]
-    public string Password { get; set; } = "YZMqZezsltpSPNb4+49PGeP7lYkzKn1a5SaVSyzKOiI=";
+    public string Password { get; set; } = string.Empty;
 }
 
 public class InterswitchAuthResponse
@@ -168,6 +168,9 @@ public class InterswitchPaymentResponse
 
     [JsonPropertyName("paymentStatus")]
     public string PaymentStatus { get; set; } = string.Empty;
+
+    [JsonPropertyName("settlementReference")]
+    public string SettlementReference { get; set; } = string.Empty;
 }
 
 public class InterswitchBillInquiryRequest

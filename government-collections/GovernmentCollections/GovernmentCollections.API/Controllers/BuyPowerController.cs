@@ -1,6 +1,6 @@
 using GovernmentCollections.Domain.DTOs;
 using GovernmentCollections.Domain.DTOs.PinValidation;
-using GovernmentCollections.Service.Services.PinValidation;
+using GovernmentCollections.Service.Services.Remita.Validation;
 using GovernmentCollections.Service.Services.BuyPower;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -12,12 +12,13 @@ public class BuyPowerController : BaseController
 {
     private readonly ILogger<BuyPowerController> _logger;
     private readonly IBuyPowerService _buyPowerService;
+    private readonly IPinValidationService _pinValidationService;
 
-    public BuyPowerController(IPinValidationService pinService, IBuyPowerService buyPowerService, ILogger<BuyPowerController> logger) 
-        : base(pinService) 
+    public BuyPowerController(IBuyPowerService buyPowerService, ILogger<BuyPowerController> logger, IPinValidationService pinValidationService)
     {
         _logger = logger;
         _buyPowerService = buyPowerService;
+        _pinValidationService = pinValidationService;
     }
 
     [HttpPost("payment")]
@@ -29,7 +30,7 @@ public class BuyPowerController : BaseController
         var userId = User.FindFirst("sub")?.Value ?? "";
         if (string.IsNullOrEmpty(userId)) return Unauthorized("User not authenticated");
 
-        var isPinValid = await ValidatePinAsync(userId, request.Pin);
+        var isPinValid = await _pinValidationService.ValidatePinAsync(userId, request.Pin);
         if (!isPinValid) return Unauthorized(new { Status = "ERROR", Message = "Invalid PIN" });
         
         var result = await _buyPowerService.ProcessPaymentAsync(request);

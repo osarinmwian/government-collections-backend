@@ -2,6 +2,8 @@ using GovernmentCollections.Service.Services.Remita;
 using GovernmentCollections.Service.Services.InterswitchGovernmentCollections;
 using GovernmentCollections.Service.Services.BuyPower;
 using GovernmentCollections.Service.Services.RevPay;
+using GovernmentCollections.Service.Services.Settlement;
+
 using GovernmentCollections.Domain.Settings;
 using System.Text;
 
@@ -16,6 +18,9 @@ public static class ServiceRegistration
         services.Configure<RemitaSettings>(configuration.GetSection("RemitaSettings"));
         services.Configure<BuyPowerSettings>(configuration.GetSection("BuyPowerSettings"));
         services.Configure<RevPaySettings>(configuration.GetSection("RevPaySettings"));
+        services.Configure<FundTransferApiUrl>(configuration.GetSection("FundTransferApiUrl"));
+        services.Configure<SettlementAccountSettings>(configuration.GetSection("SettlementAccountSettings"));
+        services.Configure<EncryptionSettings>(configuration.GetSection("EncryptionSettings"));
 
         // Add memory cache for token caching
         services.AddMemoryCache();
@@ -33,11 +38,14 @@ public static class ServiceRegistration
         services.AddHttpClient<InterswitchAuthService>();
         services.AddScoped<InterswitchAuthService>();
         
-        services.AddHttpClient<InterswitchServicesService>();
-        services.AddScoped<InterswitchServicesService>();
-        
         services.AddHttpClient<InterswitchTransactionService>();
         services.AddScoped<InterswitchTransactionService>();
+        
+        services.AddHttpClient<GovernmentCollections.Service.Services.InterswitchGovernmentCollections.BillPayment.InterswitchBillPaymentService>();
+        services.AddScoped<GovernmentCollections.Service.Services.InterswitchGovernmentCollections.BillPayment.InterswitchBillPaymentService>();
+        
+        // Register Interswitch validation service
+        services.AddScoped<GovernmentCollections.Service.Services.InterswitchGovernmentCollections.Validation.IPinValidationService, GovernmentCollections.Service.Services.InterswitchGovernmentCollections.Validation.PinValidationService>();
 
         // Register Remita services
         services.AddRemitaServices(configuration);
@@ -45,6 +53,14 @@ public static class ServiceRegistration
         // Register other payment services
         services.AddScoped<IBuyPowerService, BuyPowerService>();
         services.AddScoped<IRevPayService, RevPayService>();
+        
+        // Register settlement service
+        services.AddHttpClient<ISettlementService, SettlementService>(client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(30);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
+        services.AddScoped<ISettlementService, SettlementService>();
 
         return services;
     }
@@ -54,39 +70,43 @@ public static class ServiceRegistration
         var username = configuration["Remita:Username"];
         var password = configuration["Remita:Password"];
         
-        // Register HttpClient for RemitaService with authentication
-        services.AddHttpClient<IRemitaService, RemitaService>(client =>
+
+
+        // Register HttpClients for Remita services
+        services.AddHttpClient<GovernmentCollections.Service.Services.Remita.Authentication.RemitaAuthenticationService>(client =>
         {
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-            {
-                var credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", credentials);
-            }
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.BaseAddress = new Uri(configuration["Remita:BaseUrl"] ?? "https://api.remita.net");
+            client.Timeout = TimeSpan.FromSeconds(30);
+        });
+        
+        services.AddHttpClient<GovernmentCollections.Service.Services.Remita.BillPayment.RemitaBillPaymentService>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["Remita:BaseUrl"] ?? "https://api.remita.net");
+            client.Timeout = TimeSpan.FromSeconds(30);
+        });
+        
+        services.AddHttpClient<GovernmentCollections.Service.Services.Remita.Payment.RemitaPaymentService>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["Remita:BaseUrl"] ?? "https://api.remita.net");
+            client.Timeout = TimeSpan.FromSeconds(30);
+        });
+        
+        services.AddHttpClient<GovernmentCollections.Service.Services.Remita.Transaction.RemitaTransactionService>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["Remita:BaseUrl"] ?? "https://api.remita.net");
+            client.Timeout = TimeSpan.FromSeconds(30);
         });
 
-        // Register HttpClient for Remita API
-        services.AddHttpClient<IRemitaAuthService, RemitaAuthService>(client =>
-        {
-            client.BaseAddress = new Uri(configuration["Remita:BaseUrl"]!);
-            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-        });
-
-        services.AddHttpClient<IRemitaInvoiceService, RemitaInvoiceService>(client =>
-        {
-            client.BaseAddress = new Uri(configuration["Remita:BaseUrl"]!);
-        });
-
-        services.AddHttpClient<IRemitaPaymentGatewayService, RemitaPaymentGatewayService>(client =>
-        {
-            client.BaseAddress = new Uri(configuration["Remita:BaseUrl"]!);
-        });
-
-        // Register services
-        services.AddScoped<IRemitaAuthService, RemitaAuthService>();
-        services.AddScoped<IRemitaInvoiceService, RemitaInvoiceService>();
-        services.AddScoped<IRemitaPaymentGatewayService, RemitaPaymentGatewayService>();
-        services.AddScoped<IPinValidationService, PinValidationService>();
+        // Register Remita services
+        services.AddScoped<GovernmentCollections.Service.Services.Remita.Authentication.IRemitaAuthenticationService, GovernmentCollections.Service.Services.Remita.Authentication.RemitaAuthenticationService>();
+        services.AddScoped<GovernmentCollections.Service.Services.Remita.BillPayment.IRemitaBillPaymentService, GovernmentCollections.Service.Services.Remita.BillPayment.RemitaBillPaymentService>();
+        services.AddScoped<GovernmentCollections.Service.Services.Remita.Payment.IRemitaPaymentService, GovernmentCollections.Service.Services.Remita.Payment.RemitaPaymentService>();
+        services.AddScoped<GovernmentCollections.Service.Services.Remita.Transaction.IRemitaTransactionService, GovernmentCollections.Service.Services.Remita.Transaction.RemitaTransactionService>();
+        services.AddScoped<GovernmentCollections.Service.Services.Remita.Validation.IPinValidationService, GovernmentCollections.Service.Services.Remita.Validation.PinValidationService>();
+        services.AddScoped<GovernmentCollections.Service.Services.Settlement.ISettlementService, GovernmentCollections.Service.Services.Settlement.SettlementService>();
+        
+        // Register main RemitaService
+        services.AddScoped<IRemitaService, RemitaService>();
 
         return services;
     }

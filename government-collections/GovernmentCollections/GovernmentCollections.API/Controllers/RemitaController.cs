@@ -53,6 +53,9 @@ public class RemitaController : ControllerBase
         if (string.IsNullOrEmpty(request.Username))
             return BadRequest(new { status = "01", message = "Username is required", data = (object?)null });
 
+        if (string.IsNullOrEmpty(request.AccountNumber))
+            return BadRequest(new { status = "01", message = "AccountNumber is required", data = (object?)null });
+
         var result = await _remitaService.ProcessTransactionWithAuthAsync(request);
         return Ok(result);
     }
@@ -60,19 +63,15 @@ public class RemitaController : ControllerBase
     [HttpPost("initiate-payment")]
     public async Task<IActionResult> InitiatePayment([FromBody] RemitaInitiatePaymentDto request)
     {
+        if (request == null)
+            return BadRequest(new { status = "01", message = "Request body is required", data = (object?)null });
+
         if (!ModelState.IsValid) return BadRequest(ModelState);
         
-        var result = await _remitaService.InitiatePaymentAsync(request);
-        return Ok(result);
-    }
-
-    [HttpGet("verify-payment/{rrr}")]
-    public async Task<IActionResult> VerifyPayment(string rrr)
-    {
-        if (string.IsNullOrEmpty(rrr)) 
-            return BadRequest(new { Status = "ERROR", Message = "RRR is required" });
+        if (string.IsNullOrEmpty(request.AccountNumber))
+            return BadRequest(new { status = "01", message = "AccountNumber is required", data = (object?)null });
         
-        var result = await _remitaService.VerifyPaymentAsync(rrr);
+        var result = await _remitaService.InitiatePaymentAsync(request);
         return Ok(result);
     }
 
@@ -86,12 +85,6 @@ public class RemitaController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("banks")]
-    public async Task<IActionResult> GetActiveBanks()
-    {
-        var result = await _remitaService.GetActiveBanksAsync();
-        return Ok(result);
-    }
 
     [HttpPost("biller/activate/rrr/transaction/mandate")]
     public async Task<IActionResult> RrrActivateMandate([FromBody] RemitaRrrPaymentRequest request)
@@ -101,6 +94,9 @@ public class RemitaController : ControllerBase
             
         if (string.IsNullOrEmpty(request.Rrr))
             return BadRequest(new { status = "01", message = "RRR is required", data = (object?)null });
+
+        if (string.IsNullOrEmpty(request.AccountNumber))
+            return BadRequest(new { status = "01", message = "AccountNumber is required", data = (object?)null });
         
         var result = await _remitaService.ActivateMandateAsync(request);
         return Ok(result);
@@ -124,6 +120,9 @@ public class RemitaController : ControllerBase
             
         if (string.IsNullOrEmpty(request.Rrr))
             return BadRequest(new { status = "01", message = "RRR is required", data = (object?)null });
+
+        if (string.IsNullOrEmpty(request.AccountNumber))
+            return BadRequest(new { status = "01", message = "AccountNumber is required", data = (object?)null });
         
         var result = await _remitaService.ProcessRrrPaymentAsync(request);
         return Ok(result);

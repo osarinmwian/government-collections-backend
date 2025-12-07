@@ -22,3 +22,4 @@ C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\Government
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net8.0\refint\GovernmentCollections.Domain.dll
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net8.0\GovernmentCollections.Domain.pdb
 C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net8.0\ref\GovernmentCollections.Domain.dll
+C:\Users\nosarinmwian\Desktop\keyMobileBackEnd\government-collections\GovernmentCollections\GovernmentCollections.Domain\obj\Debug\net8.0\GovernmentCollections.Domain.sourcelink.json

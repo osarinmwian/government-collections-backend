@@ -1,0 +1,99 @@
+### RevPay API Test Endpoints
+
+### Get Bill Types
+POST http://localhost:5000/api/v1/revpay/billtypes
+Content-Type: application/json
+
+{}
+
+### Reference Validation
+POST http://localhost:5000/api/v1/revpay/validate
+Content-Type: application/json
+
+{
+  "WebGuid": "",
+  "State": "XXSG",
+  "Date": null,
+  "Hash": "",
+  "Clientid": "164815029028082",
+  "TellerID": null,
+  "Currency": "NGN",
+  "CbnCode": null,
+  "Type": "LUC"
+}
+
+### Payment Notification
+POST http://localhost:5000/api/v1/revpay/payment
+Content-Type: application/json
+
+{
+  "webguid": "",
+  "amountpaid": "1000",
+  "paymentref": "REVPAY_TXN_001",
+  "creditaccount": "",
+  "date": "2024-01-15 10:30:00",
+  "PaymentChannel": "eChannel",
+  "TellerName": "TestUser",
+  "BankNote": "Cash",
+  "tellerID": "2038978",
+  "hash": "",
+  "state": "XXSG",
+  "clientid": "164815029028082"
+}
+
+### WebGuid Generation
+POST http://localhost:5000/api/v1/revpay/webguid
+Content-Type: application/json
+
+{
+  "Pid": "12345",
+  "State": "XXSG",
+  "Amount": "1000",
+  "AgencyCode": "",
+  "RevCode": "",
+  "AppliedDate": "",
+  "AssessmentRef": "",
+  "Hash": "",
+  "clientId": "164815029028082"
+}
+
+### PID Verification
+POST http://localhost:5000/api/v1/revpay/verify-pid
+Content-Type: application/json
+
+{
+  "pid": "12345",
+  "state": "XXSG",
+  "hash": "",
+  "clientid": "164815029028082"
+}
+
+### Receipt Reprint
+POST http://localhost:5000/api/v1/revpay/receipt
+Content-Type: application/json
+
+{
+  "PaymentRef": "REVPAY_TXN_001",
+  "state": "XXSG",
+  "hash": "",
+  "clientId": "164815029028082"
+}
+
+### Process Transaction with Authentication (Similar to Remita pattern)
+POST http://localhost:5000/api/v1/revpay/process-transaction
+Content-Type: application/json
+
+{
+  "pid": "12345",
+  "amount": 1000.00,
+  "transactionRef": "REVPAY_TXN_002",
+  "name": "Test Customer",
+  "email": "test@example.com",
+  "phoneNumber": "08012345678",
+  "accountNumber": "1234567890",
+  "pin": "1234",
+  "enforce2FA": false,
+  "secondFa": "",
+  "secondFaType": "",
+  "channel": "MOBILE"
+}
